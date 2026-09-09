@@ -1,0 +1,16 @@
+{
+  "name": "@hermes/nodes",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "dependencies": {
+    "@hermes/core": "workspace:*",
+    "isolated-vm": "^5.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  }
+}

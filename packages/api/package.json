@@ -1,0 +1,19 @@
+{
+  "name": "@hermes/api",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "tsx src/server.ts",
+    "demo": "tsx src/demo.ts",
+    "build": "tsc -p ."
+  },
+  "dependencies": {
+    "@hermes/core": "workspace:*",
+    "@hermes/nodes": "workspace:*",
+    "fastify": "^4.28.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.4",
+    "@types/node": "^20.14.0"
+  }
+}

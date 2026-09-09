@@ -1,0 +1,20 @@
+{
+  "name": "hermes",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Hermes - an open workflow automation engine (n8n-style)",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev:api": "pnpm --filter @hermes/api dev",
+    "demo": "pnpm --filter @hermes/api demo"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "isolated-vm"
+    ]
+  }
+}

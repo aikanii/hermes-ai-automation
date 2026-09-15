@@ -1,13 +1,13 @@
 # Hermes
 
-An open, self-hostable workflow automation engine — a from-scratch build in the spirit of n8n.
+An open, self-hostable workflow automation engine, a from-scratch build in the spirit of n8n.
 
 Hermes lets you define workflows as a graph of **nodes** (trigger, HTTP request, transform, conditional
 branch, custom code, etc.) connected together, and executes them by passing **items** (arrays of JSON
 objects) from node to node.
 
 This repo currently implements **Phase 0**: the core execution engine, a handful of built-in node types,
-and a minimal HTTP API to run workflows. No UI yet — workflows are plain JSON.
+and a minimal HTTP API to run workflows. No UI yet, workflows are plain JSON.
 
 ## Project structure
 

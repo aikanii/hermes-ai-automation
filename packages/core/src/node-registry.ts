@@ -9,11 +9,30 @@ class NodeRegistry {
   private nodeTypes = new Map<string, INodeType>();
 
   register(nodeType: INodeType): void {
+    if (!nodeType?.description) {
+      throw new Error("Cannot register a node type without description metadata.");
+    }
     const key = nodeType.description.name;
+    if (
+      !key ||
+      !nodeType.description.displayName ||
+      !nodeType.description.description ||
+      !Number.isInteger(nodeType.description.outputs) ||
+      nodeType.description.outputs < 1
+    ) {
+      throw new Error("Cannot register a node type without complete description metadata.");
+    }
     if (this.nodeTypes.has(key)) {
       throw new Error(`Node type "${key}" is already registered.`);
     }
     this.nodeTypes.set(key, nodeType);
+  }
+
+  /** Register a node only if another implementation has not claimed its name. */
+  registerIfAbsent(nodeType: INodeType): void {
+    if (!this.nodeTypes.has(nodeType.description.name)) {
+      this.register(nodeType);
+    }
   }
 
   get(name: string): INodeType {
@@ -30,6 +49,11 @@ class NodeRegistry {
 
   list(): string[] {
     return Array.from(this.nodeTypes.keys());
+  }
+
+  /** Return registered node implementations for metadata endpoints and tooling. */
+  values(): INodeType[] {
+    return Array.from(this.nodeTypes.values());
   }
 }
 

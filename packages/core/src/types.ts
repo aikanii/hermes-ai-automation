@@ -41,12 +41,22 @@ export interface Workflow {
   active?: boolean;
 }
 
+/** A non-secret credential payload made available to a workflow execution. */
+export type HermesCredentials = Record<string, Record<string, unknown>>;
+
+/** Resolve a credential by its logical name without exposing the backing store to nodes. */
+export type HermesCredentialResolver = (
+  name: string
+) => Record<string, unknown> | undefined;
+
 /** Context passed into every node's execute() call. */
 export interface NodeExecuteContext {
   node: WorkflowNode;
+  /** True when this node has no incoming connections and starts a run. */
+  isRoot?: boolean;
   getParameter: <T = unknown>(name: string, fallback?: T) => T;
-  /** Credentials resolver (Phase 4 will back this with encrypted storage). For now, reads from parameters. */
-  getCredential: (name: string) => Record<string, unknown> | undefined;
+  /** Resolve credentials from the execution context (with inline parameters as a development fallback). */
+  getCredential: HermesCredentialResolver;
 }
 
 /**

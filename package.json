@@ -4,9 +4,12 @@
   "private": true,
   "description": "Hermes - an open workflow automation engine (n8n-style)",
   "scripts": {
-    "build": "pnpm -r build",
-    "dev:api": "pnpm --filter @hermes/api dev",
-    "demo": "pnpm --filter @hermes/api demo"
+    "build": "corepack pnpm -r build",
+    "typecheck": "corepack pnpm -r exec tsc --noEmit",
+    "test": "corepack pnpm --filter @hermes/api test",
+    "dev:api": "corepack pnpm --filter @hermes/api dev",
+    "dev:web": "corepack pnpm --filter @hermes/web dev",
+    "demo": "corepack pnpm --filter @hermes/api demo"
   },
   "devDependencies": {
     "typescript": "^5.5.4"

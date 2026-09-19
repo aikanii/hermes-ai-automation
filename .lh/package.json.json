@@ -1,0 +1,26 @@
+{
+    "sourceFile": "package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1789845720816,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1789845728555,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,23 @@\n+{\r\n+  \"name\": \"hermes\",\r\n+  \"version\": \"0.0.1\",\r\n   \"private\": true,\r\n   \"description\": \"Hermes - an open workflow automation engine (n8n-style)\",\r\n   \"scripts\": {\r\n     \"build\": \"corepack pnpm -r build\",\r\n     \"typecheck\": \"corepack pnpm -r exec tsc --noEmit\",\r\n     \"test\": \"corepack pnpm --filter @hermes/api test\",\r\n     \"dev:api\": \"corepack pnpm --filter @hermes/api dev\",\r\n     \"dev:web\": \"corepack pnpm --filter @hermes/web dev\",\r\n-    \"start:api\": \"corepack pnpm --filter @hermes/api start\",\r\n     \"demo\": \"corepack pnpm --filter @hermes/api demo\"\r\n\\ No newline at end of file\n   },\r\n   \"devDependencies\": {\r\n-    \"typescript\": \"^5.5.4\"\n+    \"typescript\": \"^5.5.4\"\r\n+  },\r\n+  \"pnpm\": {\r\n+    \"onlyBuiltDependencies\": [\r\n+      \"esbuild\",\r\n+      \"isolated-vm\"\r\n+    ]\r\n+  }\r\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1789845753661,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n     \"typecheck\": \"corepack pnpm -r exec tsc --noEmit\",\r\n     \"test\": \"corepack pnpm --filter @hermes/api test\",\r\n     \"dev:api\": \"corepack pnpm --filter @hermes/api dev\",\r\n     \"dev:web\": \"corepack pnpm --filter @hermes/web dev\",\r\n+    \"start:api\": \"corepack pnpm --filter @hermes/api start\",\r\n     \"demo\": \"corepack pnpm --filter @hermes/api demo\"\r\n   },\r\n   \"devDependencies\": {\r\n     \"typescript\": \"^5.5.4\"\r\n"
+                }
+            ],
+            "date": 1789845720816,
+            "name": "Commit-0",
+            "content": "  \"private\": true,\r\n  \"description\": \"Hermes - an open workflow automation engine (n8n-style)\",\r\n  \"scripts\": {\r\n    \"build\": \"corepack pnpm -r build\",\r\n    \"typecheck\": \"corepack pnpm -r exec tsc --noEmit\",\r\n    \"test\": \"corepack pnpm --filter @hermes/api test\",\r\n    \"dev:api\": \"corepack pnpm --filter @hermes/api dev\",\r\n    \"dev:web\": \"corepack pnpm --filter @hermes/web dev\",\r\n    \"start:api\": \"corepack pnpm --filter @hermes/api start\",\r\n    \"demo\": \"corepack pnpm --filter @hermes/api demo\"\r\n  },\r\n  \"devDependencies\": {\r\n    \"typescript\": \"^5.5.4\""
+        }
+    ]
+}

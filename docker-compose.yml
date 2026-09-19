@@ -1,0 +1,27 @@
+services:
+  api:
+    build:
+      context: .
+      target: api
+    ports:
+      - "3000:3000"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+      HERMES_WORKFLOW_STORE: /app/.data/workflows.json
+    volumes:
+      - hermes-data:/app/.data
+
+  web:
+    build:
+      context: .
+      target: web
+    depends_on:
+      - api
+    ports:
+      - "5173:5173"
+    environment:
+      HERMES_API_PROXY: http://api:3000
+
+volumes:
+  hermes-data:

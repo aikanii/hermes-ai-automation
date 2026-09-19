@@ -1,0 +1,18 @@
+{
+    "sourceFile": "docker-compose.yml",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1789845378373,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1789845378373,
+            "name": "Commit-0",
+            "content": "services:\r\n  api:\r\n    build:\r\n      context: .\r\n      target: api\r\n    ports:\r\n      - \"3000:3000\"\r\n    environment:\r\n      HOST: 0.0.0.0\r\n      PORT: 3000\r\n      HERMES_WORKFLOW_STORE: /app/.data/workflows.json\r\n    volumes:\r\n      - hermes-data:/app/.data\r\n\r\n  web:\r\n    build:\r\n      context: .\r\n      target: web\r\n    depends_on:\r\n      - api\r\n    ports:\r\n      - \"5173:5173\"\r\n    environment:\r\n      HERMES_API_PROXY: http://api:3000\r\n\r\nvolumes:\r\n  hermes-data:"
+        }
+    ]
+}

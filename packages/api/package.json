@@ -1,8 +1,10 @@
 {
   "name": "@hermes/api",
+ 
   "version": "0.0.1",
   "scripts": {
     "dev": "tsx src/server.ts",
+    "start": "tsx src/server.ts",
     "demo": "tsx src/demo.ts",
     "test": "tsx --test test/*.test.ts",
     "build": "tsc -p ."

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "packages/api/package.json",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1789845786330,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1789845786330,
+            "name": "Commit-0",
+            "content": "{\r\n  \"name\": \"@hermes/api\",\r\n \r\n  \"version\": \"0.0.1\",\r\n  \"scripts\": {\r\n    \"dev\": \"tsx src/server.ts\",\r\n    \"start\": \"tsx src/server.ts\",\r\n    \"demo\": \"tsx src/demo.ts\",\r\n    \"test\": \"tsx --test test/*.test.ts\",\r\n    \"build\": \"tsc -p .\"\r\n  },\r\n  \"dependencies\": {\r\n    \"@hermes/core\": \"workspace:*\",\r\n    \"@hermes/nodes\": \"workspace:*\",\r\n    \"fastify\": \"^4.28.1\"\r\n  },\r\n  \"devDependencies\": {\r\n    \"tsx\": \"^4.16.2\",\r\n    \"typescript\": \"^5.5.4\",\r\n    \"@types/node\": \"^20.14.0\"\r\n  }\r\n}\r\n"
+        }
+    ]
+}

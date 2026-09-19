@@ -9,6 +9,7 @@
     "test": "corepack pnpm --filter @hermes/api test",
     "dev:api": "corepack pnpm --filter @hermes/api dev",
     "dev:web": "corepack pnpm --filter @hermes/web dev",
+    "start:api": "corepack pnpm --filter @hermes/api start",
     "demo": "corepack pnpm --filter @hermes/api demo"
   },
   "devDependencies": {

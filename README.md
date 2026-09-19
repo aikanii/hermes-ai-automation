@@ -6,8 +6,8 @@ Hermes lets you define workflows as a graph of **nodes** (trigger, HTTP request,
 branch, custom code, etc.) connected together, and executes them by passing **items** (arrays of JSON
 objects) from node to node.
 
-This repo currently implements **Phase 0**: the core execution engine, a handful of built-in node types,
-and a minimal HTTP API to run workflows. No UI yet, workflows are plain JSON.
+This repo currently implements **Phase 0**: a testable core execution engine, a handful of built-in node
+types, workflow validation, and a minimal HTTP API to run workflows. No UI yet; workflows are plain JSON.
 
 ## Project structure
 
@@ -53,16 +53,33 @@ curl -X POST http://localhost:3000/workflows/execute \
   -d @examples/sample-workflow.json
 ```
 
+The API also exposes `GET /health` and `GET /nodes`. Invalid workflow JSON returns `400` with an
+`issues` array; a valid workflow that cannot execute (for example, because it contains a cycle or an
+unknown node type) returns `422` with the complete execution result.
+
+## Development checks
+
+```bash
+pnpm typecheck
+pnpm test
+pnpm build
+```
+
+The tests use Fastify's in-process request injection, so they do not need a running API server.
+
 ## How the engine works
 
 1. A **Workflow** is JSON: a list of `nodes` and a list of `connections` (edges between node ids).
-2. Nodes with no incoming connections (triggers) run first, seeded with empty input.
-3. Once a node finishes, its output items become available to whatever node(s) it's connected to.
+2. The workflow is validated before execution. Nodes with no incoming connections (triggers) run first,
+   and may receive optional root input supplied to `executeWorkflow`.
+3. Once a node finishes, its output items become available to whatever node(s) it's connected to. Empty
+   branches stay empty; they do not create phantom items in downstream nodes.
 4. A node type implements `{ description, execute(items, ctx) }` and returns an array of **output
    branches** — most nodes return one branch (`[items]`), but branching nodes like `IF` return two
    (`[trueItems, falseItems]`), matching how n8n itself models branching.
 5. Adding a new integration means writing one new file that implements `INodeType` and registering it —
-   no changes to the engine required.
+   no changes to the engine required. The built-in registration helper is idempotent, which is useful
+   for tests and hot reloads.
 
 ## Built-in nodes (Phase 0)
 

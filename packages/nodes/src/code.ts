@@ -22,8 +22,16 @@ export const CodeNode: INodeType = {
     outputs: 1,
   },
   async execute(input: HermesItems, ctx: NodeExecuteContext): Promise<HermesItems[]> {
-    const code = ctx.getParameter<string>("code", "return items;");
-    const timeoutMs = ctx.getParameter<number>("timeoutMs", 5000);
+    const code = ctx.getParameter<unknown>("code", "return items;");
+    const rawTimeoutMs = ctx.getParameter<unknown>("timeoutMs", 5000);
+    const timeoutMs = typeof rawTimeoutMs === "number" ? rawTimeoutMs : Number.NaN;
+
+    if (typeof code !== "string") {
+      throw new Error("Code node: 'code' parameter must be a string.");
+    }
+    if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+      throw new Error("Code node: 'timeoutMs' must be a positive number.");
+    }
 
     const isolate = new ivm.Isolate({ memoryLimit: 64 }); // 64MB cap per execution
     try {
@@ -42,10 +50,9 @@ export const CodeNode: INodeType = {
       `;
 
       const script = await isolate.compileScript(wrappedCode);
-      const resultRef = await script.run(context, { timeout: timeoutMs, promise: true });
-
-      // resultRef may be a primitive or a Reference depending on isolated-vm version/return type.
-      const result = resultRef instanceof ivm.Reference ? await resultRef.copy() : resultRef;
+      // `copy: true` is important: without an explicit transfer mode, isolated-vm
+      // cannot move the returned array of plain objects back to the host isolate.
+      const result = await script.run(context, { timeout: timeoutMs, copy: true });
 
       if (!Array.isArray(result)) {
         throw new Error("Code node: script must return an array of items.");

@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "tsx src/server.ts",
     "demo": "tsx src/demo.ts",
+    "test": "tsx --test test/*.test.ts",
     "build": "tsc -p ."
   },
   "dependencies": {

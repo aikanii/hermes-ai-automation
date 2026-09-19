@@ -44,6 +44,8 @@ export interface Workflow {
 /** Context passed into every node's execute() call. */
 export interface NodeExecuteContext {
   node: WorkflowNode;
+  /** True when this node has no incoming connections and starts a run. */
+  isRoot?: boolean;
   getParameter: <T = unknown>(name: string, fallback?: T) => T;
   /** Credentials resolver (Phase 4 will back this with encrypted storage). For now, reads from parameters. */
   getCredential: (name: string) => Record<string, unknown> | undefined;

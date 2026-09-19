@@ -1,0 +1,18 @@
+{
+    "sourceFile": "Dockerfile",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1789844979569,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1789844979569,
+            "name": "Commit-0",
+            "content": "# Hermes development-friendly production image.\r\n# The build stage runs the same recursive build used by CI, then the API and\r\n# web targets reuse the prepared workspace for simple self-hosting.\r\nFROM node:20-bookworm-slim AS build\r\n\r\nWORKDIR /app\r\nENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0\r\nRUN corepack enable\r\n\r\nCOPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.base.json ./\r\nCOPY packages/api/package.json packages/api/package.json\r\nCOPY packages/core/package.json packages/core/package.json\r\nCOPY packages/nodes/package.json packages/nodes/package.json\r\nCOPY packages/web/package.json packages/web/package.json\r\nRUN pnpm install --frozen-lockfile\r\n\r\nCOPY . .\r\nRUN pnpm typecheck && pnpm build\r\n\r\nFROM build AS api\r\nENV NODE_ENV=production\r\nENV HOST=0.0.0.0\r\nENV PORT=3000\r\nENV HERMES_WORKFLOW_STORE=/app/.data/workflows.json\r\nRUN mkdir -p /app/.data\r\nEXPOSE 3000\r\nCMD [\"pnpm\", \"start:api\"]\r\n\r\nFROM build AS web\r\nENV NODE_ENV=production\r\nENV HERMES_API_PROXY=http://api:3000\r\nEXPOSE 5173\r\nCMD [\"pnpm\", \"--filter\", \"@hermes/web\", \"preview\"]\r\n\r\n"
+        }
+    ]
+}

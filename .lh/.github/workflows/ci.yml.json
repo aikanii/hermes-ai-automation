@@ -1,0 +1,18 @@
+{
+    "sourceFile": ".github/workflows/ci.yml",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1789844923426,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1789844923426,
+            "name": "Commit-0",
+            "content": "name: Hermes CI\r\n\r\non:\r\n  push:\r\n    branches: [main]\r\n  pull_request:\r\n    branches: [main]\r\n\r\npermissions:\r\n  contents: read\r\n\r\njobs:\r\n  verify:\r\n    name: Typecheck, test, and build\r\n    runs-on: ubuntu-latest\r\n    timeout-minutes: 15\r\n\r\n    steps:\r\n      - name: Check out repository\r\n        uses: actions/checkout@v4\r\n\r\n      - name: Set up Node.js\r\n        uses: actions/setup-node@v4\r\n        with:\r\n          node-version: 20\r\n\r\n      - name: Enable Corepack\r\n        run: corepack enable\r\n\r\n      - name: Install dependencies\r\n        run: pnpm install --frozen-lockfile\r\n\r\n      - name: Typecheck\r\n        run: pnpm typecheck\r\n\r\n      - name: Test\r\n        run: pnpm test\r\n\r\n      - name: Build all packages\r\n        run: pnpm build"
+        }
+    ]
+}

@@ -11,6 +11,7 @@
     "isolated-vm": "^5.0.1"
   },
   "devDependencies": {
+    "@types/node": "^20.14.0",
     "typescript": "^5.5.4"
   }
 }

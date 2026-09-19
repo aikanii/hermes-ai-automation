@@ -8,6 +8,7 @@
     "typecheck": "corepack pnpm -r exec tsc --noEmit",
     "test": "corepack pnpm --filter @hermes/api test",
     "dev:api": "corepack pnpm --filter @hermes/api dev",
+    "dev:web": "corepack pnpm --filter @hermes/web dev",
     "demo": "corepack pnpm --filter @hermes/api demo"
   },
   "devDependencies": {

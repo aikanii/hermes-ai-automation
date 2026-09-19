@@ -9,11 +9,15 @@ import type {
   ExecutionResult,
   NodeExecuteContext,
   INodeType,
+  HermesCredentials,
+  HermesCredentialResolver,
 } from "./types";
 
 /** Options for a workflow run. Root nodes receive `inputItems` as their input. */
 export interface ExecuteWorkflowOptions {
   inputItems?: HermesItems;
+  /** Credentials are supplied per run and are never persisted with a workflow. */
+  credentials?: HermesCredentials | HermesCredentialResolver;
 }
 
 type IncomingConnection = { from: string; fromOutput: number };
@@ -49,6 +53,20 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function isHermesItem(value: unknown): value is HermesItem {
   return isRecord(value) && isRecord(value.json);
+}
+
+function resolveCredential(
+  credentials: ExecuteWorkflowOptions["credentials"],
+  name: string
+): Record<string, unknown> | undefined {
+  if (typeof credentials === "function") {
+    return credentials(name);
+  }
+  if (!credentials || !isRecord(credentials)) {
+    return undefined;
+  }
+  const value = credentials[name];
+  return isRecord(value) ? value : undefined;
 }
 
 /**
@@ -196,8 +214,12 @@ export async function executeWorkflow(
               return (value === undefined ? fallback : value) as T;
             },
             getCredential: (name: string) => {
-              const credential = node.parameters[`credential:${name}`];
-              return isRecord(credential) ? credential : undefined;
+              const executionCredential = resolveCredential(options.credentials, name);
+              if (executionCredential) {
+                return executionCredential;
+              }
+              const inlineCredential = node.parameters[`credential:${name}`];
+              return isRecord(inlineCredential) ? inlineCredential : undefined;
             },
           };
 

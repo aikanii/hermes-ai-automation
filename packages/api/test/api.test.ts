@@ -23,7 +23,7 @@ const workflow = {
 };
 
 test("health and node metadata endpoints are available", async () => {
-  const app = buildApp({ logger: false });
+  const app = buildApp({ logger: false, storePath: ":memory:" });
   try {
     const root = await app.inject({ method: "GET", url: "/" });
     assert.equal(root.statusCode, 200);
@@ -43,6 +43,10 @@ test("health and node metadata endpoints are available", async () => {
         "hermes.set",
         "hermes.if",
         "hermes.code",
+        "hermes.slack",
+        "hermes.github",
+        "hermes.ai.chat",
+        "hermes.ai.agent",
       ]
     );
   } finally {
@@ -51,7 +55,7 @@ test("health and node metadata endpoints are available", async () => {
 });
 
 test("execute endpoint runs a valid workflow", async () => {
-  const app = buildApp({ logger: false });
+  const app = buildApp({ logger: false, storePath: ":memory:" });
   try {
     const response = await app.inject({
       method: "POST",
@@ -69,7 +73,7 @@ test("execute endpoint runs a valid workflow", async () => {
 });
 
 test("execute endpoint reports validation problems with a 400", async () => {
-  const app = buildApp({ logger: false });
+  const app = buildApp({ logger: false, storePath: ":memory:" });
   try {
     const response = await app.inject({
       method: "POST",
@@ -84,7 +88,7 @@ test("execute endpoint reports validation problems with a 400", async () => {
 
     assert.equal(response.statusCode, 400);
     const body = response.json();
-    assert.equal(body.error, "Request body must be a valid Workflow JSON object.");
+    assert.equal(body.error, "Request body must be a valid workflow execution request.");
     assert.ok(body.issues.some((issue: { path: string }) => issue.path === "connections[0].from"));
   } finally {
     await app.close();

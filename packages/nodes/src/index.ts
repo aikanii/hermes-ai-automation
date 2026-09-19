@@ -4,6 +4,10 @@ import { HttpRequestNode } from "./http-request";
 import { SetNode } from "./set";
 import { IfNode } from "./if";
 import { CodeNode } from "./code";
+import { SlackNode } from "./slack";
+import { GitHubNode } from "./github";
+import { AiChatNode } from "./ai/chat";
+import { AiAgentNode } from "./ai/agent";
 
 /** Call this once at process startup to make all built-in nodes available to the engine. */
 export function registerBuiltInNodes(): void {
@@ -14,6 +18,20 @@ export function registerBuiltInNodes(): void {
   nodeRegistry.registerIfAbsent(SetNode);
   nodeRegistry.registerIfAbsent(IfNode);
   nodeRegistry.registerIfAbsent(CodeNode);
+  nodeRegistry.registerIfAbsent(SlackNode);
+  nodeRegistry.registerIfAbsent(GitHubNode);
+  nodeRegistry.registerIfAbsent(AiChatNode);
+  nodeRegistry.registerIfAbsent(AiAgentNode);
 }
 
-export { ManualTriggerNode, HttpRequestNode, SetNode, IfNode, CodeNode };
+export {
+  ManualTriggerNode,
+  HttpRequestNode,
+  SetNode,
+  IfNode,
+  CodeNode,
+  SlackNode,
+  GitHubNode,
+  AiChatNode,
+  AiAgentNode,
+};
